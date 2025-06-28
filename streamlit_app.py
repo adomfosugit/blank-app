@@ -33,8 +33,8 @@ with st.sidebar:
     
     # Model file mapping
     model_files = {
-        "J57 & J05": 'modelBIGDATA5US1NNMAXP57(1).pkl',
-        "J19 & J56": 'modelBIGDATA5US1NNMAXP576168allL1NN(1).pkl',
+        "J57 & J05": 'modelBIGDATA5US1NNMAXP57 (1).pkl',
+        "J19 & J56": 'modelBIGDATA5US1NNMAXP1956all (1).pkl',
         "J37 & J51": 'modelBIGDATA5US1NNMAXP5137 (1).pkl'
     }
 
