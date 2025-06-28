@@ -4,9 +4,7 @@ import pandas as pd
 import pickle
 from datetime import datetime
 from scipy.optimize import fsolve
-import pandasai
-from pandasai import SmartDataframe
-from pandasai.llm import BambooLLM
+
 
 st.set_page_config(page_title="BHP Estimator", layout="wide")
 st.title('Bottom Hole Pressure (BHP) Estimator')
@@ -35,9 +33,9 @@ with st.sidebar:
     
     # Model file mapping
     model_files = {
-        "J57 & J05": 'modelBIGDATA5US1NNMAXP57.pkl(1)',
-        "J19 & J56": 'modelBIGDATA5US1NNMAXP576168allL1NN.pkl(1)',
-        "J37 & J51": 'modelBIGDATA5US1NNMAXP5137.pkl(1)'
+        "J57 & J05": 'modelBIGDATA5US1NNMAXP57(1).pkl',
+        "J19 & J56": 'modelBIGDATA5US1NNMAXP576168allL1NN(1).pkl',
+        "J37 & J51": 'modelBIGDATA5US1NNMAXP5137 (1).pkl'
     }
 
 # Model loading function with caching
@@ -305,46 +303,6 @@ with tab3:
             
         except Exception as e:
             st.error(f"Solving failed: {str(e)}")
-            st.warning("Check if the target BHP is physically achievable with given inputs.")
-with tab4:
-    st.header("AI-Powered Data Analysis")
-    st.caption("Ask questions about your uploaded data using natural language.")
-
-    # Set PandasAI API key
-    pandasai.api_key.set("PAI-09de3b8d-edb9-4d72-998f-60508abfb286")
-
-    # Upload data file if not done already
-    uploaded_file_ai = uploaded_file if uploaded_file is not None else st.file_uploader("Upload a CSV or Excel file for analysis", type=["csv", "xlsx"], key="ai_file")
-
-    if uploaded_file_ai is not None:
-        try:
-            if uploaded_file_ai.name.endswith(".csv"):
-                df_ai = pd.read_csv(uploaded_file_ai)
-            else:
-                df_ai = pd.read_excel(uploaded_file_ai)
-
-            # Display data preview
-            st.dataframe(df_ai.head(), use_container_width=True)
-
-            # Wrap with SmartDataFrame
-            sdf = SmartDataframe(df_ai, config={"llm": BambooLLM(api_key="PAI-09de3b8d-edb9-4d72-998f-60508abfb286")})
-
-            # Ask the user for a natural language query
-            user_query = st.text_area("Ask a question about your data", placeholder="")
-
-            if st.button("Run AI Query", key="run_pandasai"):
-                with st.spinner("Thinking..."):
-                    try:
-                        result = sdf.chat(user_query)
-                        st.subheader("AI Response:")
-                        st.write(result)
-                    except Exception as e:
-                        st.error(f"Error processing query: {e}")
-
-        except Exception as e:
-            st.error(f"Failed to process uploaded file: {e}")
-    else:
-        st.info("Upload a file to begin AI analysis.")
 # Additional data exploration (only for file data)
 if st.session_state.original_df is not None:
     with st.expander("Advanced Data Exploration"):
