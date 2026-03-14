@@ -32,8 +32,8 @@ s
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/well-test-analysis.git
-   cd well-test-analysis
+   git clone https://github.com/adomfosugit/well-test-analysis.git
+   
    ```
 
 2. **Install dependencies**
